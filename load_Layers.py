@@ -1,28 +1,35 @@
 import networkx as nx
 __author__ = """Joseph Jira (jmjira@gmail.com)"""
-__all__ = ['load_Layers']
+__all__ = ['load_layers']
 
 
-def load_Layers():
+def load_layers():
     """
     Generates a networkx.DiGraph from layers within an open map document. 
     Point geometries are translated into nodes, lines into edges. 
     Coordinate tuples are used as keys. Accepts a single layer or many
     layers.
-
+    
+    Must have an arcmap document (mxd) open with at least one point layer
+    or line layer.
+    
+    ESRI ARCGIS 10 and networkx required
+    
+    Install in C:\Python26\ArcGIS10.0\site-packages\networkx-1.6-py2.6egg\networkx\readwrite
+    
     Returns
     -------
     G : networkX graph
 
     Examples
     --------
-    import networkx as nx
+    >>> import arcpy
+    >>> import networkx as nx
     >>> G = nx.DiGraph()
-    
-    >>> nx.load_Layers()
-    
-    >>> G=nx.load_Layers()
-
+    >>> G = nx.load_layers()
+    >>> G.number_of_nodes()
+    91
+    >>>
     """
     import arcpy
     net = nx.DiGraph()
@@ -56,13 +63,3 @@ def load_Layers():
                 net.add_edge(edge_pt1XY, edge_pt2XY)
             del row, rows
     return net
-
-            
-            
-            
-        
-        
-    
-
-    
-
