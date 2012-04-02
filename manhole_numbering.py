@@ -26,7 +26,7 @@ G.add_nodes_from(node_list)
 G.add_edges_from(edge_list)
 
 # topoligical sort will sort through nodes and return from starting node
-# to ending node ( or from upstream manhole to downstream manhole)
+# to ending node ( or from upstream manhole to downstream manhole )
 
 toplogical_node_list = nx.topological_sort(G)
 
