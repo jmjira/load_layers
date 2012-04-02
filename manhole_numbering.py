@@ -5,9 +5,20 @@
 
 
 def make_manhole_list(interceptor, branch, sub_branch, number_of_nodes):
-    last_manhole = (number_of_nodes * 6)
+    last_manhole = (number_of_nodes * 5)
+    first_manhole = (last_manhole / number_of_nodes)
     manhole_list = []
-    manhole_number = range(5, last_manhole, 5)
+    def inclusive_range(start, stop, step=1):
+        """
+        A range() clone, but this includes the extremes
+        """
+        l = []
+        x = start
+        while x <= stop:
+            l.append(x)
+            x += step
+        return l    
+    manhole_number = inclusive_range(first_manhole, last_manhole, 5)
     for node in manhole_number:
         manhole_list.append(interceptor + branch + \
         sub_branch + str(node).zfill(4))
