@@ -10,12 +10,15 @@ def add_local_manhole_attributes(layer):
         ownership = row.getValue('OWNERSHIP')
         flow = row.getValue('FLOW')
 
+# For local terminator label (degree == 1, with no shape)
         if G.degree(nodeXY) == 1:
             attributes = {}
             flow = flow.replace(' ','\n')
             attributes['label'] = ownership + '\n' + flow
             attributes['shape'] = 'none'
             G.add_node(nodeXY, attributes)
+            
+# For a local manhole within the DiGraph (a ellipse labeled 'LOCAL')
         else:
             attributes = {}
             ownership = ownership.replace(' ','\n')
@@ -33,9 +36,10 @@ def add_district_manhole_attributes(layer):
         node = feat.getPart()
         nodeXY = node.X,node.Y
         name = row.getValue('NAME')
-        
         manholetype = row.getValue('TYPE')
         interceptor = row.getValue('INTERCEPTOR')
+        
+# This is the 'default' District manhole
         if G.degree(nodeXY) > 1:
             attributes = {}
             attributes['label'] = name
