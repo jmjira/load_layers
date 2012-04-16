@@ -37,6 +37,7 @@ def add_district_manhole_attributes(layer):
         nodeXY = node.X,node.Y
         name = row.getValue('NAME')
         manholetype = row.getValue('TYPE')
+        districttype = row.getValue('DISTRICTTYPE')
         interceptor = row.getValue('INTERCEPTOR')
         
 # This is the 'default' District manhole
@@ -59,13 +60,22 @@ def add_district_manhole_attributes(layer):
             attributes['shape'] = 'point'
             G.add_node(nodeXY, attributes)
 
-        if G.degree(nodeXY) == 1:
+        if G.degree(nodeXY) == 1 and districttype == 'INTERCEPTOR':
             attributes = {}
             interceptor = interceptor.replace(' - ', '\n')
             interceptor = interceptor.replace(' ', '\n')
             attributes['label'] = interceptor
             attributes['shape'] = 'none'
-            G.add_node(nodeXY, attributes)            
+            G.add_node(nodeXY, attributes)
+            
+        if G.degree(nodeXY) == 1 and districttype == 'CSO RESPONSIBILITY':
+            attributes = {}
+            name = name[3:6]
+            name = 'TO' + '\n' + 'CSO-' + name
+            attributes['label'] = name
+            attributes['shape'] = 'none'
+            G.add_node(nodeXY, attributes)
+            
     del row, rows
             
 def add_district_permit_point_attributes(layer):
