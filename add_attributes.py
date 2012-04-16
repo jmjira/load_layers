@@ -40,20 +40,22 @@ def add_district_manhole_attributes(layer):
         districttype = row.getValue('DISTRICTTYPE')
         interceptor = row.getValue('INTERCEPTOR')
         
-# This is the 'default' District manhole
+# default District manhole
         if G.degree(nodeXY) > 1:
             attributes = {}
             attributes['label'] = name
             attributes['style'] = 'filled'
             attributes['fillcolor'] = '#E5CCFF'
             G.add_node(nodeXY, attributes)
-
+            
+# Blind Junction
         if G.degree(nodeXY) > 1 and manholetype == 'BLIND JUNCTION':
             attributes = {}
             attributes['label'] = name + '\n' + '(BJ)'
             attributes['fillcolor'] = '#E0E0E0'
             G.add_node(nodeXY, attributes)
 
+# Terminators:
         if G.degree(nodeXY) == 1 and manholetype == 'BULKHEAD':
             attributes = {}
             attributes['xlabel'] = 'BULKHEAD'
